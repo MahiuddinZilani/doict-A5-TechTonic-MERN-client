@@ -1,7 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
+  const { logout } = useContext(AuthContext);
+
   const menu = (
     <>
       <li>
@@ -81,7 +84,7 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <Link onClick={logout}>Log Out</Link>
             </li>
           </ul>
         </div>

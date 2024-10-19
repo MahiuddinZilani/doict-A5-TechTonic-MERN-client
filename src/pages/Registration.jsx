@@ -14,8 +14,7 @@ const Registration = () => {
     const photo = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-
-    const newUser = { name, photo, email, password };
+    // const newUser = { name, photo, email, password };
 
     createUser(email, password)
       .then((userCredential) => {
@@ -29,7 +28,8 @@ const Registration = () => {
       })
       .catch((error) => console.error(error));
 
-    console.log(newUser);
+    // console.log(newUser);
+    form.reset();
   };
   return (
     <div className="w-full flex justify-center items-center">

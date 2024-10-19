@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Login = () => {
+  const { login, loginWithGoogle } = useContext(AuthContext);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // const user = { email, password };
 
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    login(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // console.log(user);
+      })
+      .catch((error) => console.error(error));
 
-    const user = { email, password };
-
-    console.log(user);
+    // console.log(user);
+    form.reset();
   };
   return (
     <div className="flex justify-center items-center max-h-full">
@@ -75,7 +84,11 @@ const Login = () => {
         </div>
 
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            onClick={loginWithGoogle}
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
