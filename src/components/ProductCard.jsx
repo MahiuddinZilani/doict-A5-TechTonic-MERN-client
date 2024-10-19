@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const ProductCard = ({ product }) => {
   const { _id, photoUrl, model, brand, price } = product;
+  const { user } = useContext(AuthContext);
 
   //   const id = _id.toString();
   //   const url = `/product/${id}`;
@@ -23,7 +26,7 @@ const ProductCard = ({ product }) => {
         <Link to={`/products/${_id}`}>
           <div className="card-actions justify-center">
             <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
-              Add to Cart
+              View Details
             </button>
           </div>
         </Link>
