@@ -2,27 +2,45 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    const user = { email, password };
+
+    console.log(user);
+  };
   return (
     <div className="flex justify-center items-center max-h-full">
       <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800">
         <h1 className="text-2xl font-bold text-center">Login</h1>
 
-        <form noValidate="" action="" className="space-y-6">
+        <form
+          onSubmit={handleLogin}
+          noValidate=""
+          action=""
+          className="space-y-6"
+        >
+          {/* Email */}
           <div className="space-y-1 text-sm">
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block text-gray-400 dark:text-gray-600"
             >
-              Username
+              Email or Username
             </label>
             <input
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="email"
               className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
             />
           </div>
+          {/* Password  */}
           <div className="space-y-1 text-sm">
             <label
               htmlFor="password"

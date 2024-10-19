@@ -1,27 +1,96 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
+import { updateProfile } from "firebase/auth";
 
 const Registration = () => {
+  const { createUser } = useContext(AuthContext);
+
+  const handleRegistration = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const name = e.target.name.value;
+    const photo = e.target.photo.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    const newUser = { name, photo, email, password };
+
+    createUser(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        updateProfile(user, {
+          displayName: name,
+          photoURL: photo,
+        });
+        console.log(user);
+      })
+      .catch((error) => console.error(error));
+
+    console.log(newUser);
+  };
   return (
-    <div>
+    <div className="w-full flex justify-center items-center">
       <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800">
         <h1 className="text-2xl font-bold text-center">Registration</h1>
-        <form noValidate="" action="" className="space-y-6">
+        {/*------------------------------ form ----------------------- */}
+        <form
+          onSubmit={handleRegistration}
+          noValidate=""
+          action=""
+          className="space-y-6"
+        >
+          {/* Name */}
           <div className="space-y-1 text-sm">
             <label
-              htmlFor="username"
+              htmlFor="name"
               className="block text-gray-400 dark:text-gray-600"
             >
-              Username
+              Full Name
             </label>
             <input
               type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
+              name="name"
+              id="name"
+              placeholder="Name"
               className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
             />
           </div>
+          {/* Photo */}
+          <div className="space-y-1 text-sm">
+            <label
+              htmlFor="photo"
+              className="block text-gray-400 dark:text-gray-600"
+            >
+              Photo (Upload or Link)
+            </label>
+            <input
+              type="url"
+              name="photo"
+              id="photo"
+              placeholder="Your Photo"
+              className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
+            />
+          </div>
+          {/* Email */}
+          <div className="space-y-1 text-sm">
+            <label
+              htmlFor="email"
+              className="block text-gray-400 dark:text-gray-600"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="email"
+              className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
+            />
+          </div>
+          {/* Password  */}
           <div className="space-y-1 text-sm">
             <label
               htmlFor="password"
@@ -42,8 +111,9 @@ const Registration = () => {
               </a>
             </div>
           </div>
-          <button className="block w-full p-3 text-center rounded-sm text-gray-900 dark:text-gray-50 bg-violet-400 dark:bg-violet-600">
-            Sign in
+
+          <button className="block w-full p-3 text-center rounded-lg text-gray-900 dark:text-gray-50 bg-violet-400 dark:bg-violet-600">
+            Registration
           </button>
         </form>
 
