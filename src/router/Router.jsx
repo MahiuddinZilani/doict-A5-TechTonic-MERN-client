@@ -9,6 +9,8 @@ import Registration from "../pages/Registration";
 import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "../layout/Dashboard";
 import Profile from "../components/Profile";
+import Cart from "../components/Cart";
+import CategoryProducts from "../pages/CategoryProducts";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,12 @@ const router = createBrowserRouter([
         path: "/products",
         element: <Products />,
         loader: () => fetch("http://localhost:5100/products"),
+      },
+      {
+        path: "/productsCategory/:categoryName",
+        element: <CategoryProducts />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5100/categories/${params.categoryName}`),
       },
       {
         path: "/products/:id",
@@ -55,12 +63,16 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "dashboard",
     element: <Dashboard />,
     children: [
       {
-        path: "/dashboard/profile",
+        path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "carts",
+        element: <Cart />,
       },
       // { path: "/orders", element: <Orders /> },
       // { path: "/settings", element: <Settings /> },
