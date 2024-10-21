@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
@@ -23,7 +23,8 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100">
+    // <div className="navbar fixed z-10 bg-opacity-50 bg-black text-white">
+    <div className="navbar   bg-black text-white">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -44,12 +45,12 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content text-white bg-black bg-opacity-50 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             {menu}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">Tech Tonic</a>
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -68,22 +69,24 @@ const Navbar = () => {
                 <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
               </div>
             </div>
-            <ul
+            <div
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu dropdown-content text-black bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              <li>
-                <a className="">Name: {user?.displayName}</a>
-              </li>
-              <li>
-                <a>Email: {user?.email}</a>
-              </li>
-              <li className="w-full">
+              <div>
+                <p className="">Name: {user?.displayName}</p>
+                <p>Email: {user?.email}</p>
+              </div>
+              <div className="flex justify-start flex-col">
+                <Link to={"/dashboard/profile"}>Profile</Link>
+                <Link to={"/dashboard"}>Dashboard</Link>
+              </div>
+              <div className="w-full">
                 <Link onClick={logout}>
                   <button className="btn w-full">Log Out</button>
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         ) : (
           <Link to={"/login"} className="btn btn-ghost">

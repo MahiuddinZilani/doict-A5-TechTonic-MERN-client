@@ -1,35 +1,41 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
-import { updateProfile } from "firebase/auth";
 
 const Registration = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, userUpdateProfile, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleRegistration = (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
     const form = e.target;
-
     const name = e.target.name.value;
     const photo = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     // const newUser = { name, photo, email, password };
 
-    createUser(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+    createUser(email, password, name, photo)
+      .then((res) => {
+        const newUser = res.user;
+        console.log(newUser);
 
-        updateProfile(user, {
-          displayName: name,
-          photoURL: photo,
-        });
-        console.log(user);
+        userUpdateProfile(name, photo)
+          .then(() => {
+            console.log("Profile updated");
+            // Manually update the user state so UI can reflect changes
+            setUser({
+              ...newUser,
+              displayName: name,
+              photoURL: photo,
+            });
+            form.reset();
+
+            navigate("/");
+          })
+          .catch((error) => console.error(error));
       })
       .catch((error) => console.error(error));
-
-    // console.log(newUser);
-    form.reset();
   };
   return (
     <div className="w-full flex justify-center items-center">

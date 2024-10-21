@@ -7,6 +7,8 @@ import ProductDetails from "../pages/ProductDetails";
 import Login from "../pages/Login";
 import Registration from "../pages/Registration";
 import PrivateRoutes from "./PrivateRoutes";
+import Dashboard from "../layout/Dashboard";
+import Profile from "../components/Profile";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,7 @@ const router = createBrowserRouter([
         path: "/registration",
         element: <Registration />,
       },
+
       // {
       //   path: "/products/:id/:category",
       //   element: <ProductDetails />,
@@ -49,6 +52,18 @@ const router = createBrowserRouter([
       //       `http://localhost:5100/products/${params.id}/${params.category}`
       //     ),
       // },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "/dashboard/profile",
+        element: <Profile />,
+      },
+      // { path: "/orders", element: <Orders /> },
+      // { path: "/settings", element: <Settings /> },
     ],
   },
 ]);
