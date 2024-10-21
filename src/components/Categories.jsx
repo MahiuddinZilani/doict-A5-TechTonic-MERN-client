@@ -21,7 +21,9 @@ const Categories = () => {
             key={category.id}
             className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <h2 className="text-xl font-semibold mb-2">{category.name}</h2>
+            <h2 className="text-xl font-semibold mb-2">
+              {category.name?.toUpperCase()}
+            </h2>
             <p className="text-gray-500 mb-4">{category.description}</p>
             <Link to={`/productsCategory/${category.name}`}>
               <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200">

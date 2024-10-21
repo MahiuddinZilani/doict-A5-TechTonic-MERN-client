@@ -1,12 +1,22 @@
 import { useContext } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/shared/Navbar";
 
 const Dashboard = () => {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <>
+        <span className="loading loading-bars loading-xs"></span>
+        <span className="loading loading-bars loading-sm"></span>
+        <span className="loading loading-bars loading-md"></span>
+        <span className="loading loading-bars loading-lg"></span>
+      </>
+    );
+  }
 
   return (
     <>
@@ -20,12 +30,11 @@ const Dashboard = () => {
                 Welcome, {user?.displayName}!
               </h1>
               <Outlet />{" "}
-              {/* This will render the selected section like Profile, Orders, etc. */}
             </div>
           </div>
         </>
       ) : (
-        navigate("/")
+        <Navigate to={"/"} replace />
       )}
     </>
   );
