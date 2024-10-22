@@ -2,9 +2,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const { login, loginWithGoogle } = useContext(AuthContext);
+  const { login, loginWithGoogle, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,13 +21,23 @@ const Login = () => {
     login(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+
+        setUser(user);
         console.log(user);
+
         navigate(from, { replace: true });
+        form.reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => console.error(error));
 
     // console.log(user);
-    form.reset();
   };
   return (
     <>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { user } = useContext(AuthContext);
@@ -28,6 +29,11 @@ const ProductDetails = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          if (data?.insertedId) {
+            toast.success(`${cartItem.name} is added to cart successfully.!`, {
+              position: "top-center",
+            });
+          }
         })
         .catch((error) => console.error(error));
     }

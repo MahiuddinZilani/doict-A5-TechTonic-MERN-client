@@ -9,6 +9,8 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
+import Swal from "sweetalert2";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext(null);
 
@@ -46,9 +48,48 @@ const AuthProvider = ({ children }) => {
   const loginWithGoogle = () => {
     setLoading(true);
     const googleProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleProvider).finally(() =>
-      setLoading(false)
-    );
+    return signInWithPopup(auth, googleProvider)
+      .then((res) => {
+        const newUser = res.user;
+        setUser(newUser);
+
+        const userForDB = {
+          // uid: newUser.uid,
+          email: newUser.email,
+          displayName: newUser.displayName,
+          photoURL: newUser.photoURL,
+          createdAt: new Date(),
+        };
+
+        fetch("http://localhost:5100/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userForDB), // Pass the correct user data
+        })
+          .then((res) => res.json()) // Parse the response
+          .then((data) => {
+            console.log("User saved in database:", data);
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Login Successful!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((error) => console.error(error));
+
+        if (user) {
+          return (
+            <>
+              <Navigate to={"/"}></Navigate>
+            </>
+          );
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   // Logout
