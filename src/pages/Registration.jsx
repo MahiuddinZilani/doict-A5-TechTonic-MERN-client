@@ -1,90 +1,96 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
-import Swal from "sweetalert2";
 
 const Registration = () => {
-  const { createUser, userUpdateProfile, loginWithGoogle } =
-    useContext(AuthContext);
+  const { createUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleRegistration = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = e.target.name.value;
-    const photo = e.target.photo.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const name = form.name.value;
+    const photo = form.photo.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const phone = form.phone.value;
+    const address = form.address.value;
     // const newUser = { name, photo, email, password };
 
-    createUser(email, password, name, photo)
-      .then((res) => {
-        const newUser = res.user; // Firebase created user
-        console.log(newUser);
+    try {
+      await createUser(email, password, name, photo, phone, address);
+      navigate("/"); // Redirect on successful registration
+    } catch (err) {
+      // Capture and display error message
+      console.error(err.message);
+    }
+    // .then((res) => {
+    //   const newUser = res.user; // Firebase created user
+    //   console.log(newUser);
 
-        // Update the Firebase user profile
-        userUpdateProfile(name, photo)
-          .then(() => {
-            console.log("Profile updated");
+    //   // Update the Firebase user profile
+    //   userUpdateProfile(name, photo)
+    //     .then(() => {
+    //       console.log("Profile updated");
 
-            // Manually update the user state so UI can reflect changes
-            // setUser({
-            //   ...newUser,
-            //   displayName: name,
-            //   photoURL: photo,
-            // });
+    //       // Manually update the user state so UI can reflect changes
+    //       // setUser({
+    //       //   ...newUser,
+    //       //   displayName: name,
+    //       //   photoURL: photo,
+    //       // });
 
-            // Create the user object to send to the backend
-            const userForDB = {
-              createdAt: new Date(),
-              uid: newUser.uid,
-              email: newUser.email,
-              displayName: name || "User",
-              phone: "phone",
-              photoUrl: photo || "https://i.ibb.co/k6hTYW1/Alien-Dev.jpg",
-              address: "address",
-              isAdmin: false, // Default role
-              isBlocked: false, // Default status
-            };
+    //       // Create the user object to send to the backend
+    //       const userForDB = {
+    //         createdAt: new Date(),
+    //         uid: newUser.uid,
+    //         email: newUser.email,
+    //         displayName: name || "User",
+    //         phone: "phone",
+    //         photoUrl: photo || "https://i.ibb.co/k6hTYW1/Alien-Dev.jpg",
+    //         address: "address",
+    //         isAdmin: false, // Default role
+    //         isBlocked: false, // Default status
+    //       };
 
-            // Send the user data to the backend to store in MongoDB
-            fetch("http://localhost:5100/users", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(userForDB), // Pass the correct user data
-            })
-              .then((res) => res.json()) // Parse the response
-              .then((data) => {
-                console.log("User saved in database:", data);
-                if (data.insertedId) {
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "User is created successfully",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                } else {
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    title: `${data?.message}`,
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                }
-                // Reset the form after successful operation
-                form.reset();
-                // Navigate to the homepage
-                navigate("/");
-              })
-              .catch((error) => console.error(error));
-          })
-          .catch((error) => console.error("Profile update error:", error));
-      })
-      .catch((error) => console.error("Error registering user:", error));
+    //       // Send the user data to the backend to store in MongoDB
+    //       fetch("http://localhost:5100/users", {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(userForDB), // Pass the correct user data
+    //       })
+    //         .then((res) => res.json()) // Parse the response
+    //         .then((data) => {
+    //           console.log("User saved in database:", data);
+    //           if (data.insertedId) {
+    //             Swal.fire({
+    //               position: "top-end",
+    //               icon: "success",
+    //               title: "User is created successfully",
+    //               showConfirmButton: false,
+    //               timer: 1500,
+    //             });
+    //           } else {
+    //             Swal.fire({
+    //               position: "top-end",
+    //               icon: "error",
+    //               title: `${data?.message}`,
+    //               showConfirmButton: false,
+    //               timer: 1500,
+    //             });
+    //           }
+    //           // Reset the form after successful operation
+    //           form.reset();
+    //           // Navigate to the homepage
+    //           navigate("/");
+    //         })
+    //         .catch((error) => console.error(error));
+    //     })
+    //     .catch((error) => console.error("Profile update error:", error));
+    // })
+    // .catch((error) => console.error("Error registering user:", error));
   };
   return (
     <div className="w-full flex justify-center items-center">
@@ -142,6 +148,38 @@ const Registration = () => {
               name="email"
               id="email"
               placeholder="email"
+              className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
+            />
+          </div>
+          {/* Phone */}
+          <div className="space-y-1 text-sm">
+            <label
+              htmlFor="phone"
+              className="block text-gray-400 dark:text-gray-600"
+            >
+              Phone
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              placeholder="phone"
+              className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
+            />
+          </div>
+          {/* Address */}
+          <div className="space-y-1 text-sm">
+            <label
+              htmlFor="address"
+              className="block text-gray-400 dark:text-gray-600"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              placeholder="address"
               className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-violet-400 focus:dark:border-violet-600"
             />
           </div>

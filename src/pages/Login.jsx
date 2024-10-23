@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const { login, loginWithGoogle, setUser } = useContext(AuthContext);
+  const { login, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,12 +19,7 @@ const Login = () => {
     // const user = { email, password };
 
     login(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-
-        setUser(user);
-        console.log(user);
-
+      .then(() => {
         navigate(from, { replace: true });
         form.reset();
         Swal.fire({

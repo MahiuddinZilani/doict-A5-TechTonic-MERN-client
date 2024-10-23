@@ -11,6 +11,7 @@ import Dashboard from "../layout/Dashboard";
 import Profile from "../components/Profile";
 import Cart from "../components/Cart";
 import CategoryProducts from "../pages/CategoryProducts";
+import EditProfile from "../components/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "carts",
         element: <Cart />,
+      },
+      {
+        path: "edit-profile",
+        element: <EditProfile />,
       },
       // { path: "/orders", element: <Orders /> },
       // { path: "/settings", element: <Settings /> },

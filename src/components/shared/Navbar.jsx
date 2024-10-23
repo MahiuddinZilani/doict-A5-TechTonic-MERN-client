@@ -3,7 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const menu = (
     <>
@@ -66,7 +69,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full border">
-                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                <img alt="Tailwind CSS Navbar component" src={user?.photoUrl} />
               </div>
             </div>
             <div
@@ -78,8 +81,8 @@ const Navbar = () => {
                 <p>Email: {user?.email}</p>
               </div>
               <div className="flex justify-start flex-col">
-                <Link to={"/dashboard/profile"}>Profile</Link>
-                <Link to={"/dashboard"}>Dashboard</Link>
+                <Link to={"/dashboard/profile"}>Dashboard</Link>
+                {/* <Link to={"/dashboard"}>Dashboard</Link> */}
               </div>
               <div className="w-full">
                 <Link onClick={logout}>

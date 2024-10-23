@@ -18,22 +18,49 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // onAuthStateChanged
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("from onAuthStateChanged: ", currentUser);
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  //   Create user with email and password
-  const createUser = (email, password) => {
+  const createUser = async (email, password, name, photo, phone, address) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const newUser = userCredential.user;
+
+      // Update profile with name and photo
+      await userUpdateProfile(name, photo);
+
+      // Save user data in MongoDB
+      const response = await fetch("http://localhost:5100/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: newUser.uid,
+          email: newUser.email,
+          displayName: name || "User",
+          phone: phone,
+          photoUrl: photo,
+          address: address,
+          isAdmin: false, // Default role
+          isBlocked: false, // Default status
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to register user data.");
+      }
+
+      setUser(newUser); // Update state
+      return newUser;
+    } catch (error) {
+      console.error(error);
+      throw error; // Make sure to throw so the error can be caught by the caller
+    } finally {
+      setLoading(false); // Always set loading to false when done
+    }
   };
 
   //   Log in with email and password
@@ -95,7 +122,7 @@ const AuthProvider = ({ children }) => {
   // Logout
   const logout = () => {
     setLoading(true);
-    return signOut(auth).finally(() => setLoading(false));
+    return signOut(auth);
   };
 
   const userUpdateProfile = (name, photo) => {
@@ -104,6 +131,39 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     });
   };
+
+  // onAuthStateChanged
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setLoading(true); // Start loading when auth state changes
+      if (currentUser) {
+        try {
+          const res = await fetch(
+            `http://localhost:5100/users/${currentUser.email}`
+          );
+
+          if (!res.ok) {
+            throw new Error("Failed to fetch user data.");
+          }
+
+          const data = await res.json();
+          console.log(data, currentUser);
+          setUser(data); // Set user state with the MongoDB user data
+        } catch (error) {
+          console.error("Error fetching user data:", error.message);
+        } finally {
+          setLoading(false); // Stop loading once fetch is done
+        }
+      } else {
+        setUser(null);
+        setLoading(false); // Stop loading if there's no current user
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const authInfo = {
     user,
