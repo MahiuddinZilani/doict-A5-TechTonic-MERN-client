@@ -12,6 +12,9 @@ import Profile from "../components/Profile";
 import Cart from "../components/Cart";
 import CategoryProducts from "../pages/CategoryProducts";
 import EditProfile from "../components/EditProfile";
+import AdminRoutes from "./AdminRoutes";
+import AllUsers from "../components/AllUsers";
+import AddProduct from "../components/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -79,8 +82,22 @@ const router = createBrowserRouter([
         path: "edit-profile",
         element: <EditProfile />,
       },
-      // { path: "/orders", element: <Orders /> },
-      // { path: "/settings", element: <Settings /> },
+      {
+        path: "allUsers",
+        element: (
+          <AdminRoutes>
+            <AllUsers />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "addProduct",
+        element: (
+          <AdminRoutes>
+            <AddProduct />
+          </AdminRoutes>
+        ),
+      },
     ],
   },
 ]);

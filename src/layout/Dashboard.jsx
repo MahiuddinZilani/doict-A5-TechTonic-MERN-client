@@ -20,7 +20,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {user ? (
+      {!user.isAdmin ? (
         <>
           <Navbar />
           <div className="flex min-h-screen">
@@ -34,7 +34,18 @@ const Dashboard = () => {
           </div>
         </>
       ) : (
-        <Navigate to={"/"} replace />
+        <>
+          <Navbar />
+          <div className="flex min-h-screen">
+            <Sidebar />
+            <div className="flex-1 bg-gray-100 p-6">
+              <h1 className="text-4xl font-bold mb-6">
+                Welcome, {user?.displayName}!
+              </h1>
+              <Outlet />{" "}
+            </div>
+          </div>
+        </>
       )}
     </>
   );
