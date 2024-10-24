@@ -9,17 +9,27 @@ const Sidebar = () => {
     <>
       {user.isAdmin ? (
         <>
-          <NavLink
-            to={"/dashboard/allUsers"}
-            className="block p-4 hover:bg-gray-700"
-          >
-            All Users
-          </NavLink>
+          <li>
+            <NavLink
+              to="/dashboard/profile"
+              className="block p-4 hover:bg-gray-700"
+            >
+              Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/allUsers"}
+              className="block p-4 hover:bg-gray-700"
+            >
+              All Users
+            </NavLink>
+          </li>
           <NavLink
             to={"/dashboard/addCategory"}
             className="block p-4 hover:bg-gray-700"
           >
-            Add Category
+            All Category
           </NavLink>
           <NavLink
             to={"/dashboard/addProduct"}

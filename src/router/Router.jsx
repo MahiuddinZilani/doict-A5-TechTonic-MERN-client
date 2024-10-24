@@ -15,6 +15,7 @@ import EditProfile from "../components/EditProfile";
 import AdminRoutes from "./AdminRoutes";
 import AllUsers from "../components/AllUsers";
 import AddProduct from "../components/AddProduct";
+import EditUser from "../components/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,16 @@ const router = createBrowserRouter([
             <AllUsers />
           </AdminRoutes>
         ),
+      },
+      {
+        path: "/dashboard/edit-user/:email",
+        element: (
+          <AdminRoutes>
+            <EditUser></EditUser>
+          </AdminRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5100/users/${params.email}`),
       },
       {
         path: "addProduct",

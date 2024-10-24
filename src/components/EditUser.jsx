@@ -1,18 +1,18 @@
 import { useContext } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
-const EditProfile = () => {
-  const { user, loading, setUser } = useContext(AuthContext);
-  // const [updatedUser, setUpdatedUser] = useState({});
+const EditUser = () => {
+  const { loading } = useContext(AuthContext);
+  const loadedUserData = useLoaderData();
   const navigate = useNavigate();
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  const handleProfileUpdateForm = (e) => {
+  const handleUserEditForm = (e) => {
     e.preventDefault();
     const form = e.target;
     const displayName = form.displayName.value;
@@ -20,30 +20,29 @@ const EditProfile = () => {
     const address = form.address.value;
     const photoUrl = form.photoUrl.value;
 
-    const userUpdateData = {
+    const updateUserData = {
       displayName,
       phone,
       address,
       photoUrl,
-      uid: user.uid,
-      email: user.email,
-      isAdmin: user?.isAdmin,
-      isBlocked: user?.isBlocked,
+      uid: loadedUserData.uid,
+      //   email: loadedUserData.email,
+      isAdmin: loadedUserData.isAdmin,
+      isBlocked: loadedUserData.isBlocked,
     };
-    // Update user data in the database
-
-    fetch(`http://localhost:5100/users/${user.email}`, {
+    //     Update user data in the database
+    fetch(`http://localhost:5100/users/${loadedUserData.email}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userUpdateData),
+      body: JSON.stringify(updateUserData),
     })
       .then((res) => res.json())
       .then(() => {
-        toast.success("Profile updated successfully");
-        setUser(userUpdateData);
-        navigate("/dashboard/profile");
+        toast.success(`${displayName}'s information is updated successfully!`);
+        // setUser(userUpdateData);
+        navigate("/dashboard/allUsers");
       })
       .catch((error) => {
         console.error("Error updating profile:", error);
@@ -54,9 +53,10 @@ const EditProfile = () => {
     <div>
       <section className="w-full p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-          Update Your Profile Information{" "}
+          Update {loadedUserData.displayName}
+          {"'s "} Information{" "}
         </h2>
-        <form onSubmit={handleProfileUpdateForm}>
+        <form onSubmit={handleUserEditForm}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label
@@ -68,7 +68,7 @@ const EditProfile = () => {
               <input
                 id="displayName"
                 type="text"
-                defaultValue={user.displayName}
+                defaultValue={loadedUserData.displayName}
                 name="displayName"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -83,7 +83,7 @@ const EditProfile = () => {
               <input
                 id="phone"
                 type="tel"
-                defaultValue={user.phone}
+                defaultValue={loadedUserData.phone}
                 name="phone"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -98,7 +98,7 @@ const EditProfile = () => {
               <input
                 id="address"
                 type="address"
-                defaultValue={user.address}
+                defaultValue={loadedUserData.address}
                 name="address"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -108,12 +108,12 @@ const EditProfile = () => {
                 className="text-gray-700 dark:text-gray-200"
                 htmlFor="photoUrl"
               >
-                Password Confirmation
+                Image
               </label>
               <input
                 id="photoUrl"
                 type="url"
-                defaultValue={user.photoUrl}
+                defaultValue={loadedUserData.photoUrl}
                 name="photoUrl"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -130,4 +130,15 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default EditUser;
+
+// const {
+//     displayName,
+//     phone,
+//     address,
+//     photoUrl,
+//     uid,
+//     email,
+//     isAdmin,
+//     isBlocked,
+//   } = useLoaderData();
