@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
+import { MdDeleteForever } from "react-icons/md";
 
 const Cart = () => {
   const { user } = useContext(AuthContext);
@@ -27,18 +28,19 @@ const Cart = () => {
         <div>Total Price: ${total}</div>
         <button className="btn">Proceed to Payment</button>
       </div>
+      <hr />
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table my-8">
           {/* Table header */}
           <thead>
-            <tr>
+            <tr className="border-1 border-black">
               <th>No.</th>
               <th>Image</th>
               <th>Name</th>
               <th>Category</th>
               <th>Brand</th>
               <th>Price</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -64,7 +66,10 @@ const Cart = () => {
                 <td>{item.brand}</td>
                 <td>${item.price}</td>
                 <th>
-                  <button className="btn btn-ghost btn-xs">Delete</button>
+                  <div className="flex items-center justify-around">
+                    <MdDeleteForever className="text-2xl" />
+                    <button className="btn btn-primary btn-sm">Payment</button>
+                  </div>
                 </th>
               </tr>
             ))}

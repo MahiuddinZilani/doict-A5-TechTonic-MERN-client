@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import uploadImageToImgBB from "../imgBB/imgbb.config";
 
 const EditProfile = () => {
   const { user, loading, setUser } = useContext(AuthContext);
@@ -12,13 +13,15 @@ const EditProfile = () => {
     return <div>Loading...</div>;
   }
 
-  const handleProfileUpdateForm = (e) => {
+  const handleProfileUpdateForm = async (e) => {
     e.preventDefault();
     const form = e.target;
     const displayName = form.displayName.value;
     const phone = form.phone.value;
     const address = form.address.value;
-    const photoUrl = form.photoUrl.value;
+
+    const photoFile = e.target.photoUrl.files[0];
+    const photoUrl = await uploadImageToImgBB(photoFile);
 
     const userUpdateData = {
       displayName,
@@ -30,6 +33,8 @@ const EditProfile = () => {
       isAdmin: user?.isAdmin,
       isBlocked: user?.isBlocked,
     };
+
+    // console.log(userUpdateData);
     // Update user data in the database
 
     fetch(`http://localhost:5100/users/${user.email}`, {
@@ -108,13 +113,14 @@ const EditProfile = () => {
                 className="text-gray-700 dark:text-gray-200"
                 htmlFor="photoUrl"
               >
-                Password Confirmation
+                Upload Profile Picture
               </label>
               <input
                 id="photoUrl"
-                type="url"
-                defaultValue={user.photoUrl}
+                type="file"
+                // defaultValue={user.photoUrl}
                 name="photoUrl"
+                // onChange={handleImage}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
