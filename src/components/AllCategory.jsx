@@ -36,7 +36,7 @@ const AllCategory = () => {
             {/* row 1 */}
             {categories.map((category, index) => (
               <>
-                <tr>
+                <tr key={index}>
                   <th>{index + 1}</th>
                   <td>
                     <div className="flex items-center gap-3">

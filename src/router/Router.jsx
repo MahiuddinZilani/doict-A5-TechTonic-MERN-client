@@ -14,9 +14,9 @@ import CategoryProducts from "../pages/CategoryProducts";
 import EditProfile from "../components/EditProfile";
 import AdminRoutes from "./AdminRoutes";
 import AllUsers from "../components/AllUsers";
-import AddProduct from "../components/AddProduct";
 import EditUser from "../components/EditUser";
 import AllCategory from "../components/AllCategory";
+import AllProducts from "../components/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -104,10 +104,10 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:5100/categories"),
       },
       {
-        path: "addProduct",
+        path: "allProducts",
         element: (
           <AdminRoutes>
-            <AddProduct />
+            <AllProducts />
           </AdminRoutes>
         ),
       },

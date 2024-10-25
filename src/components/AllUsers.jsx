@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
@@ -59,6 +60,7 @@ const AllUsers = () => {
                     <th>Last Logged In</th>
                     <th>Role</th>
                     <th>Status</th>
+
                     <th>Update User</th>
                     <th>Change Role</th>
                   </tr>
@@ -87,23 +89,40 @@ const AllUsers = () => {
                         {new Date(user.lastLoggedIn).toLocaleDateString() ||
                           "N/A"}
                       </td>
-                      <td>{user.isAdmin ? "Admin" : "User"}</td>
+                      <td>
+                        {user?.isSuper
+                          ? "Super Admin"
+                          : user.isAdmin
+                          ? "Admin"
+                          : "User"}
+                      </td>
                       <td>{user.isBlocked ? "Blocked" : "Active"}</td>
-                      <td>
-                        <Link to={`/dashboard/edit-user/${user.email}`}>
-                          <FaEdit className="text-center"></FaEdit>
-                        </Link>
-                      </td>
-                      <td>
-                        <input
-                          type="checkbox"
-                          className="toggle toggle-success toggle-sm"
-                          checked={user.isAdmin}
-                          onChange={() =>
-                            handleUserRole(user.email, user.isAdmin)
-                          }
-                        />
-                      </td>
+                      {user.isSuper ? (
+                        <>
+                          <td>
+                            <RiAdminFill />
+                          </td>
+                          <td>Immutable</td>
+                        </>
+                      ) : (
+                        <>
+                          <td>
+                            <Link to={`/dashboard/edit-user/${user.email}`}>
+                              <FaEdit className="text-center"></FaEdit>
+                            </Link>
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              className="toggle toggle-success toggle-sm"
+                              checked={user.isAdmin}
+                              onChange={() =>
+                                handleUserRole(user.email, user.isAdmin)
+                              }
+                            />
+                          </td>
+                        </>
+                      )}
                     </tr>
                   ))}
                 </tbody>

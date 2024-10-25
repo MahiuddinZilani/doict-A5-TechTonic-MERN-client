@@ -46,6 +46,7 @@ const AuthProvider = ({ children }) => {
           address: address,
           isAdmin: false, // Default role
           isBlocked: false, // Default status
+          isSuper: false,
         }),
       });
 
