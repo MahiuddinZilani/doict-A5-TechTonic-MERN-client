@@ -25,17 +25,19 @@ const Sidebar = () => {
               All Users
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to={"/dashboard/allCategory"}
+              className="block p-4 hover:bg-gray-700"
+            >
+              All Category
+            </NavLink>
+          </li>
           <NavLink
-            to={"/dashboard/addCategory"}
+            to={"/dashboard/allProducts"}
             className="block p-4 hover:bg-gray-700"
           >
-            All Category
-          </NavLink>
-          <NavLink
-            to={"/dashboard/addProduct"}
-            className="block p-4 hover:bg-gray-700"
-          >
-            Add Product
+            All Products
           </NavLink>
           <NavLink
             to={"/dashboard/updateProduct"}
@@ -76,6 +78,14 @@ const Sidebar = () => {
               className="block p-4 hover:bg-gray-700"
             >
               My Payment
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/allUsers"}
+              className="block p-4 hover:bg-gray-700"
+            >
+              All Users
             </NavLink>
           </li>
         </>

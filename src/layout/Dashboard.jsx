@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/shared/Navbar";
 
 const Dashboard = () => {
   const { user, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   if (loading) {
     return (
@@ -20,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {!user.isAdmin ? (
+      {user ? (
         <>
           <Navbar />
           <div className="flex min-h-screen">
@@ -34,18 +35,7 @@ const Dashboard = () => {
           </div>
         </>
       ) : (
-        <>
-          <Navbar />
-          <div className="flex min-h-screen">
-            <Sidebar />
-            <div className="flex-1 bg-gray-100 p-6">
-              <h1 className="text-4xl font-bold mb-6">
-                Welcome, {user?.displayName}!
-              </h1>
-              <Outlet />{" "}
-            </div>
-          </div>
-        </>
+        navigate("/")
       )}
     </>
   );

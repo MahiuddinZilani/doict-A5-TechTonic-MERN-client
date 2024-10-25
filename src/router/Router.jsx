@@ -16,6 +16,7 @@ import AdminRoutes from "./AdminRoutes";
 import AllUsers from "../components/AllUsers";
 import AddProduct from "../components/AddProduct";
 import EditUser from "../components/EditUser";
+import AllCategory from "../components/AllCategory";
 
 const router = createBrowserRouter([
   {
@@ -85,11 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: "allUsers",
-        element: (
-          <AdminRoutes>
-            <AllUsers />
-          </AdminRoutes>
-        ),
+        element: <AllUsers />,
       },
       {
         path: "/dashboard/edit-user/:email",
@@ -100,6 +97,11 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`http://localhost:5100/users/${params.email}`),
+      },
+      {
+        path: "allCategory",
+        element: <AllCategory />,
+        loader: () => fetch("http://localhost:5100/categories"),
       },
       {
         path: "addProduct",
