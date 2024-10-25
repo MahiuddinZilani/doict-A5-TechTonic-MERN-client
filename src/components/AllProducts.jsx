@@ -4,6 +4,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import EditProductModal from "./shared/EditProductModal";
+import { MdAddToPhotos } from "react-icons/md";
 
 const AllProducts = () => {
   const loadedProducts = useLoaderData();
@@ -77,6 +78,13 @@ const AllProducts = () => {
   return (
     <div>
       <h1>All Products ({products.length})</h1>
+      <Link
+        to={"/dashboard/addProduct"}
+        className="btn mx-auto my-8 flex bg-green-700 text-white hover:text-black w-2/12 h-fit p-2"
+      >
+        <p> Add Product</p>
+        <MdAddToPhotos className="text-3xl" />
+      </Link>
       <div className="overflow-x-auto">
         <table className="table table-xs">
           <thead>

@@ -17,6 +17,7 @@ import AllUsers from "../components/AllUsers";
 import EditUser from "../components/EditUser";
 import AllCategory from "../components/AllCategory";
 import AllProducts from "../components/AllProducts";
+import AddProduct from "../components/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,15 @@ const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <AllProducts />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "addProduct",
+        loader: () => fetch("http://localhost:5100/products"),
+        element: (
+          <AdminRoutes>
+            <AddProduct></AddProduct>
           </AdminRoutes>
         ),
       },
