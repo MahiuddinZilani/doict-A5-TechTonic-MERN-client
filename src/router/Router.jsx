@@ -105,6 +105,7 @@ const router = createBrowserRouter([
       },
       {
         path: "allProducts",
+        loader: () => fetch("http://localhost:5100/products"),
         element: (
           <AdminRoutes>
             <AllProducts />

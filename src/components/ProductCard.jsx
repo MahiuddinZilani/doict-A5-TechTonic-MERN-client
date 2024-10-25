@@ -20,9 +20,7 @@ const ProductCard = ({ product }) => {
           {model}
           <div className="badge badge-secondary">{brand}</div>
         </h2>
-        <p className="text-lg font-semibold text-blue-500 mt-2">
-          ${price?.toFixed(2)}
-        </p>
+        <p className="text-lg font-semibold text-blue-500 mt-2">${price}</p>
         <Link to={`/products/${_id}`}>
           <div className="card-actions justify-center">
             <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
