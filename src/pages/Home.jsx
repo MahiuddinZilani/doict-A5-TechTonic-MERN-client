@@ -1,5 +1,6 @@
 import Banner from "../components/Banner";
 import Categories from "../components/Categories";
+import FAQSection from "../components/FAQSection";
 import HighlightsSection from "../components/HighlightsSection";
 import Footer from "../components/shared/Footer";
 import { Helmet } from "react-helmet-async";
@@ -18,7 +19,7 @@ const Home = () => {
 
       <Categories />
       <HighlightsSection />
-
+      <FAQSection />
       <Footer />
     </div>
   );
