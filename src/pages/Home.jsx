@@ -11,10 +11,14 @@ const Home = () => {
         <title>TechTonic | Home</title>
       </Helmet>
       <Banner />
-      <main className="bg-[#F0F2F5] dark:bg-gray-200">
+      {/* <main className="bg-[#F0F2F5] dark:bg-gray-200">
         <Categories />
         <HighlightsSection />
-      </main>
+      </main> */}
+
+      <Categories />
+      <HighlightsSection />
+
       <Footer />
     </div>
   );
