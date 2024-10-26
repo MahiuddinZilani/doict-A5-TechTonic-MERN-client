@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import carousel0 from "../assets/carousel-0.jpg";
 import carousel1 from "../assets/carousel-1.jpg";
 import carousel2 from "../assets/carousel-2.jpg";
-import carousel3 from "../assets/carousel-3.png";
+// import carousel3 from "../assets/carousel-3.png";
 import carousel4 from "../assets/carousel-4.jpg";
 import carousel5 from "../assets/carousel-5.jpg";
 
@@ -12,7 +12,7 @@ const Banner = () => {
     carousel0,
     carousel1,
     carousel2,
-    carousel3,
+    // carousel3,
     carousel4,
     carousel5,
   ];

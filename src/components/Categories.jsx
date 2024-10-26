@@ -13,23 +13,34 @@ const Categories = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">Categories</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="max-w-screen-xl mx-auto p-4">
+      <h1 className="text-3xl font-bold text-center mb-8">Categories</h1>
+      <div className="grid grid-cols-1 w-full mx-auto md:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((category) => (
           <div
             key={category.id}
-            className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
           >
-            <h2 className="text-xl font-semibold mb-2">
-              {category.name?.toUpperCase()}
-            </h2>
-            <p className="text-gray-500 mb-4">{category.description}</p>
-            <Link to={`/productsCategory/${category.name}`}>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200">
-                View Products
-              </button>
-            </Link>
+            <div className="card bg-gray-100">
+              <figure className="flex items-center justify-center h-40">
+                <img
+                  src={category?.photoURL}
+                  alt={category?.name}
+                  className="object-cover h-full w-full"
+                />
+              </figure>
+              <div className="card-body p-4 text-center">
+                <h2 className="text-2xl font-bold mb-2 text-center text-[#0A1F44]">
+                  {category?.name}
+                </h2>
+                <Link
+                  to={`/productsCategory/${category.name}`}
+                  className="btn bg-[#0A1F44] text-white btn-sm mt-2"
+                >
+                  View {category?.name}
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
       </div>

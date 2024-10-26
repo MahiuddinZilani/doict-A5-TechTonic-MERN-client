@@ -10,7 +10,9 @@ const Home = () => {
         <title>TechTonic | Home</title>
       </Helmet>
       <Banner />
-      <Categories />
+      <main className="bg-[#F0F2F5] dark:bg-gray-200">
+        <Categories />
+      </main>
       <Footer />
     </div>
   );
