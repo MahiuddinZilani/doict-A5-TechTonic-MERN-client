@@ -1,16 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "./shared/LoadingSpinner";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch categories from the backend
-    fetch("http://localhost:5100/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((error) => console.error(error));
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("http://localhost:5100/categories");
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
   }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="max-w-screen-xl mx-auto p-4">
@@ -34,7 +48,7 @@ const Categories = () => {
                   {category?.name}
                 </h2>
                 <Link
-                  to={`/productsCategory/${category.name}`}
+                  to={`/productsCategory/${category.name.toLowerCase()}`}
                   className="btn bg-[#0A1F44] text-white btn-sm mt-2"
                 >
                   View {category?.name}

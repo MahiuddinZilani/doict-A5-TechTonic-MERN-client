@@ -3,11 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import logo from "../../assets/techTonic_croped-removebg.png";
 import { IoMdLogOut } from "react-icons/io";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Navbar = () => {
   const { user, logout, loading } = useContext(AuthContext);
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   const menu = (
@@ -97,7 +98,7 @@ const Navbar = () => {
               </div>
               <div
                 tabIndex={0}
-                className="menu dropdown-content bg-slate-300 dark:bg-slate-800 dark:bg-opacity-70 dark:backdrop-blur-sm dark:border-spacing-60 text-black dark:text-white  rounded-box z-[1] mt-3 w-96  p-4 shadow"
+                className="menu dropdown-content bg-slate-300 dark:bg-slate-800 dark:bg-opacity-70 dark:backdrop-blur-sm dark:border-spacing-60 text-black dark:text-white  rounded-box z-50 mt-3 w-96  p-4 shadow"
               >
                 <div className="flex justify-center items-center flex-col space-y-2">
                   <p className="text-lg font-normal">{user?.email}</p>
