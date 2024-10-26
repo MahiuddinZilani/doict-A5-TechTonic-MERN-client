@@ -50,17 +50,31 @@ const AuthProvider = ({ children }) => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to register user data.");
+      const data = await response.json();
+      if (response.ok && data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User is created successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        throw new Error(data.message || "Failed to save user data in database");
       }
 
-      setUser(newUser); // Update state
-      return newUser;
+      await logout();
+      return true;
     } catch (error) {
-      console.error(error);
-      throw error; // Make sure to throw so the error can be caught by the caller
+      console.error("Error during registration:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+      throw error;
     } finally {
-      setLoading(false); // Always set loading to false when done
+      setLoading(false);
     }
   };
 
