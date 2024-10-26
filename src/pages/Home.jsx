@@ -1,5 +1,6 @@
 import Banner from "../components/Banner";
 import Categories from "../components/Categories";
+import HighlightsSection from "../components/HighlightsSection";
 import Footer from "../components/shared/Footer";
 import { Helmet } from "react-helmet-async";
 
@@ -12,6 +13,7 @@ const Home = () => {
       <Banner />
       <main className="bg-[#F0F2F5] dark:bg-gray-200">
         <Categories />
+        <HighlightsSection />
       </main>
       <Footer />
     </div>
