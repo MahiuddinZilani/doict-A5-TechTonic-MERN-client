@@ -47,22 +47,22 @@ const Footer = () => {
             <div className="col-span-full text-center md:text-left md:col-span-3">
               <p className="pb-1 text-lg font-medium">Follow Us</p>
               <div className="flex justify-center space-x-4 mt-2 text-2xl">
-                <Link to={"/"}>
+                <Link to={"https://www.facebook.com/"}>
                   <FaFacebook />
                 </Link>
-                <Link to={"/"}>
+                <Link to={"https://x.com/"}>
                   <FaX />
                 </Link>
-                <Link to={"/"}>
+                <Link to={"https://www.linkedin.com/"}>
                   <FaLinkedin />
                 </Link>
-                <Link to={"/"}>
+                <Link to={"https://www.youtube.com/"}>
                   <FaYoutube />
                 </Link>
-                <Link to={"/"}>
+                <Link to={"https://web.telegram.org/"}>
                   <FaTelegram />
                 </Link>
-                <Link to={"/"}>
+                <Link to={"https://web.whatsapp.com/"}>
                   <FaWhatsapp />
                 </Link>
                 {/* Repeat the above link structure for each social media platform */}
