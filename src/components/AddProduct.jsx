@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import uploadImageToImgBB from "../imgBB/imgbb.config";
+import { Helmet } from "react-helmet-async";
 
 const AddProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -116,175 +117,180 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-        Add New Product
-      </h2>
-      <form onSubmit={handleSubmit} className="grid gap-6 md:grid-cols-2">
-        {/* Product ID */}
-        <div>
-          <label className="block mb-2 text-gray-700">Product ID</label>
-          <input
-            type="text"
-            name="id"
-            value={newId}
-            readOnly
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+    <>
+      <Helmet>
+        <title>Add Product</title>
+      </Helmet>
+      <div className="container mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          Add New Product
+        </h2>
+        <form onSubmit={handleSubmit} className="grid gap-6 md:grid-cols-2">
+          {/* Product ID */}
+          <div>
+            <label className="block mb-2 text-gray-700">Product ID</label>
+            <input
+              type="text"
+              name="id"
+              value={newId}
+              readOnly
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Product Name */}
-        <div>
-          <label className="block mb-2 text-gray-700">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={productData.name}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+          {/* Product Name */}
+          <div>
+            <label className="block mb-2 text-gray-700">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={productData.name}
+              onChange={handleInputChange}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Brand */}
-        <div>
-          <label className="block mb-2 text-gray-700">Brand</label>
-          <input
-            type="text"
-            name="brand"
-            value={productData.brand}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+          {/* Brand */}
+          <div>
+            <label className="block mb-2 text-gray-700">Brand</label>
+            <input
+              type="text"
+              name="brand"
+              value={productData.brand}
+              onChange={handleInputChange}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Category */}
-        <div>
-          <label className="block mb-2 text-gray-700">Category</label>
-          <select
-            name="category"
-            value={productData.category}
-            onChange={handleInputChange}
-            className="select select-bordered w-full"
-            required
-          >
-            <option value="">Select a category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          {/* Category */}
+          <div>
+            <label className="block mb-2 text-gray-700">Category</label>
+            <select
+              name="category"
+              value={productData.category}
+              onChange={handleInputChange}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Price */}
-        <div>
-          <label className="block mb-2 text-gray-700">Price ($)</label>
-          <input
-            type="number"
-            name="price"
-            value={productData.price}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+          {/* Price */}
+          <div>
+            <label className="block mb-2 text-gray-700">Price ($)</label>
+            <input
+              type="number"
+              name="price"
+              value={productData.price}
+              onChange={handleInputChange}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Stock */}
-        <div>
-          <label className="block mb-2 text-gray-700">Stock</label>
-          <input
-            type="number"
-            name="stock"
-            value={productData.stock}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+          {/* Stock */}
+          <div>
+            <label className="block mb-2 text-gray-700">Stock</label>
+            <input
+              type="number"
+              name="stock"
+              value={productData.stock}
+              onChange={handleInputChange}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Release Date */}
-        <div>
-          <label className="block mb-2 text-gray-700">Release Date</label>
-          <input
-            type="date"
-            name="releaseDate"
-            value={productData.releaseDate}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+          {/* Release Date */}
+          <div>
+            <label className="block mb-2 text-gray-700">Release Date</label>
+            <input
+              type="date"
+              name="releaseDate"
+              value={productData.releaseDate}
+              onChange={handleInputChange}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Specifications */}
-        <div className="md:col-span-2">
-          <label className="block mb-2 text-gray-700">Specifications</label>
-          <textarea
-            name="specifications"
-            value={productData.specifications}
-            onChange={handleInputChange}
-            className="textarea textarea-bordered w-full"
-            rows="3"
-            // required
-          />
-        </div>
+          {/* Specifications */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-gray-700">Specifications</label>
+            <textarea
+              name="specifications"
+              value={productData.specifications}
+              onChange={handleInputChange}
+              className="textarea textarea-bordered w-full"
+              rows="3"
+              // required
+            />
+          </div>
 
-        {/* Photo Upload */}
-        <div className="md:col-span-2">
-          <label className="block mb-2 text-gray-700">
-            Upload Product Photo
-          </label>
-          <input
-            type="file"
-            name="photoURL"
-            onChange={handleImageChange}
-            className="file-input file-input-bordered w-full"
-            required
-          />
-        </div>
+          {/* Photo Upload */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-gray-700">
+              Upload Product Photo
+            </label>
+            <input
+              type="file"
+              name="photoURL"
+              onChange={handleImageChange}
+              className="file-input file-input-bordered w-full"
+              required
+            />
+          </div>
 
-        {/* Rating */}
-        <div>
-          <label className="block mb-2 text-gray-700">Rating</label>
-          <input
-            type="number"
-            name="rating"
-            value={productData.rating}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            step="0.1"
-            min="0"
-            max="5"
-            required
-          />
-        </div>
+          {/* Rating */}
+          <div>
+            <label className="block mb-2 text-gray-700">Rating</label>
+            <input
+              type="number"
+              name="rating"
+              value={productData.rating}
+              onChange={handleInputChange}
+              className="input input-bordered w-full"
+              step="0.1"
+              min="0"
+              max="5"
+              required
+            />
+          </div>
 
-        {/* Reviews */}
-        <div className="md:col-span-2">
-          <label className="block mb-2 text-gray-700">Reviews</label>
-          <textarea
-            name="reviews"
-            value={productData.reviews}
-            onChange={handleInputChange}
-            className="textarea textarea-bordered w-full"
-            rows="2"
-            // required
-          />
-        </div>
+          {/* Reviews */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-gray-700">Reviews</label>
+            <textarea
+              name="reviews"
+              value={productData.reviews}
+              onChange={handleInputChange}
+              className="textarea textarea-bordered w-full"
+              rows="2"
+              // required
+            />
+          </div>
 
-        {/* Submit Button */}
-        <div className="md:col-span-2">
-          <button
-            type="submit"
-            className="btn rounded-xl bg-[#0A1F44] text-white hover:bg-transparent hover:border hover:border-[#0A1F44] hover:text-[#0A1F44] w-full"
-          >
-            Add Product
-          </button>
-        </div>
-      </form>
-    </div>
+          {/* Submit Button */}
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              className="btn rounded-xl bg-[#0A1F44] text-white hover:bg-transparent hover:border hover:border-[#0A1F44] hover:text-[#0A1F44] w-full"
+            >
+              Add Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

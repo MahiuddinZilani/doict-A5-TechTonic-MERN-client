@@ -5,6 +5,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import EditProductModal from "./shared/EditProductModal";
 import { MdAddToPhotos } from "react-icons/md";
+import { Helmet } from "react-helmet-async";
 
 const AllProducts = () => {
   const loadedProducts = useLoaderData();
@@ -77,6 +78,9 @@ const AllProducts = () => {
   // console.log(selectedProduct, isModalOpen);
   return (
     <div>
+      <Helmet>
+        <title>All Products</title>
+      </Helmet>
       <h1>All Products ({products.length})</h1>
       <Link
         to={"/dashboard/addProduct"}

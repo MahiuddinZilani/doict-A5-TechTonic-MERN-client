@@ -47,24 +47,48 @@ const Footer = () => {
             <div className="col-span-full text-center md:text-left md:col-span-3">
               <p className="pb-1 text-lg font-medium">Follow Us</p>
               <div className="flex justify-center space-x-4 mt-2 text-2xl">
-                <Link to={"https://www.facebook.com/"}>
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaFacebook />
-                </Link>
-                <Link to={"https://x.com/"}>
+                </a>
+                <a
+                  href="https://x.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaX />
-                </Link>
-                <Link to={"https://www.linkedin.com/"}>
+                </a>
+                <a
+                  href="https://www.aedin.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaLinkedin />
-                </Link>
-                <Link to={"https://www.youtube.com/"}>
+                </a>
+                <a
+                  href="https://www.youtube.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaYoutube />
-                </Link>
-                <Link to={"https://web.telegram.org/"}>
+                </a>
+                <a
+                  href="https://web.telegram.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaTelegram />
-                </Link>
-                <Link to={"https://web.whatsapp.com/"}>
+                </a>
+                <a
+                  href="https://web.whatsapp.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaWhatsapp />
-                </Link>
+                </a>
                 {/* Repeat the above link structure for each social media platform */}
               </div>
             </div>
