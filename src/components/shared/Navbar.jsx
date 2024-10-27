@@ -64,7 +64,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="flex flex-col space-y-8 dropdown-content bg-slate-300 dark:bg-slate-800 dark:bg-opacity-70 dark:backdrop-blur-sm dark:border-spacing-60 text-black dark:text-white  rounded-box z-[1] mt-3 w-52  p-4 shadow"
+              className="flex flex-col space-y-8 dropdown-content  bg-slate-800  bg-opacity-70  backdrop-blur-sm  border-spacing-60    text-white  rounded-box z-[1] mt-3 w-52  p-4 shadow"
             >
               {menu}
             </ul>
@@ -98,7 +98,7 @@ const Navbar = () => {
               </div>
               <div
                 tabIndex={0}
-                className="menu dropdown-content bg-slate-300 dark:bg-slate-800 dark:bg-opacity-70 dark:backdrop-blur-sm dark:border-spacing-60 text-black dark:text-white  rounded-box z-50 mt-3 w-96  p-4 shadow"
+                className="menu dropdown-content  bg-slate-900  bg-opacity-80  backdrop-blur-sm  border-spacing-60  text-white  rounded-box z-50 mt-3 w-96  p-4 shadow"
               >
                 <div className="flex justify-center items-center flex-col space-y-2">
                   <p className="text-lg font-normal">{user?.email}</p>

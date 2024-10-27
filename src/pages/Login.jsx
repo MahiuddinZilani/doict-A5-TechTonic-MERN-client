@@ -11,7 +11,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard";
+  const from = location.state?.from?.pathname || "/dashboard/profile";
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -21,7 +21,6 @@ const Login = () => {
 
     login(email, password)
       .then(() => {
-        navigate(from, { replace: true });
         form.reset();
         Swal.fire({
           position: "top-end",
@@ -30,6 +29,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate(from, { replace: true });
       })
       .catch((error) => console.error(error));
   };
@@ -40,8 +40,8 @@ const Login = () => {
         <title>Login</title>
       </Helmet>
       <div className=" my-8  flex items-center justify-center px-4">
-        <div className="w-full max-w-md p-8 bg-gray-900 dark:bg-gray-50 shadow-lg rounded-lg">
-          <h1 className="text-3xl font-bold text-center text-gray-100 dark:text-gray-800 mb-6">
+        <div className="w-full max-w-md p-8 bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg">
+          <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-50 mb-6">
             Login
           </h1>
 
@@ -104,19 +104,19 @@ const Login = () => {
             <button
               onClick={loginWithGoogle}
               aria-label="Log in with Google"
-              className="p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:bg-violet-600 dark:hover:bg-violet-400 transition duration-300"
+              className="p-3 rounded-full text-3xl"
             >
               <FaFacebook />
             </button>
             <button
               aria-label="Log in with Twitter"
-              className="p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:bg-violet-600 dark:hover:bg-violet-400 transition duration-300"
+              className="p-3 rounded-full text-3xl"
             >
               <FaX />
             </button>
             <button
               aria-label="Log in with GitHub"
-              className="p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:bg-violet-600 dark:hover:bg-violet-400 transition duration-300"
+              className="p-3 rounded-full text-3xl"
             >
               <FaGithub />
             </button>

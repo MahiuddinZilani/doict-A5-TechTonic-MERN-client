@@ -11,6 +11,7 @@ import {
   FaSignOutAlt,
   FaBars,
 } from "react-icons/fa";
+import { MdAddToPhotos } from "react-icons/md";
 
 const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const Sidebar = () => {
               to="/dashboard/profile"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
@@ -42,7 +43,7 @@ const Sidebar = () => {
               to="/dashboard/allUsers"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
@@ -52,14 +53,28 @@ const Sidebar = () => {
           </li>
           <li>
             <NavLink
+              to="/dashboard/carts"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
+                }`
+              }
+            >
+              <FaShoppingCart />
+              {!isCollapsed && <span>My Cart</span>}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/dashboard/allCategory"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
               <FaList />
+
               {!isCollapsed && <span>All Category</span>}
             </NavLink>
           </li>
@@ -68,11 +83,11 @@ const Sidebar = () => {
               to="/dashboard/allProducts"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
-              <FaList />
+              <MdAddToPhotos />
               {!isCollapsed && <span>All Products</span>}
             </NavLink>
           </li>
@@ -97,7 +112,7 @@ const Sidebar = () => {
               to="/dashboard/profile"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
@@ -107,10 +122,23 @@ const Sidebar = () => {
           </li>
           <li>
             <NavLink
+              to="/dashboard/allUsers"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
+                }`
+              }
+            >
+              <FaUsers />
+              {!isCollapsed && <span>All Users</span>}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/dashboard/carts"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
@@ -123,7 +151,7 @@ const Sidebar = () => {
               to="/dashboard/reviews"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
@@ -136,25 +164,12 @@ const Sidebar = () => {
               to="/dashboard/payment"
               className={({ isActive }) =>
                 `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
+                  isActive ? "border-b-4 border-amber-500 rounded-lg" : ""
                 }`
               }
             >
               <FaDollarSign />
               {!isCollapsed && <span>My Payment</span>}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/allUsers"
-              className={({ isActive }) =>
-                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
-                  isActive ? "bg-gray-700" : ""
-                }`
-              }
-            >
-              <FaUsers />
-              {!isCollapsed && <span>All Users</span>}
             </NavLink>
           </li>
         </>
@@ -164,9 +179,9 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`flex flex-col items-center bg-[#0A1F44] text-white ${
+      className={`sticky top-20 flex flex-col items-center bg-[#0A1F44] text-white ${
         isCollapsed ? "w-20" : "w-64"
-      } transition-width duration-300 min-h-screen`}
+      } transition-width duration-300 h-[100vh]`}
     >
       <div className="p-4 flex justify-between items-center">
         <h2

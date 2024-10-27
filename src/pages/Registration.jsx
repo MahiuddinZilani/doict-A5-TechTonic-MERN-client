@@ -52,7 +52,7 @@ const Registration = () => {
         <title>Registration</title>
       </Helmet>
       <div className="w-full my-8 flex justify-center items-center ">
-        <div className="w-3/4 lg:w-full max-w-2xl p-8 space-y-2 rounded-xl bg-gray-200  shadow-lg text-gray-900 ">
+        <div className="w-3/4 lg:w-full max-w-2xl p-8 space-y-2 rounded-xl bg-gray-100  shadow-lg text-gray-900 ">
           <h1 className="text-2xl font-bold text-center text-[#0A1F44]">
             Register
           </h1>
@@ -179,21 +179,21 @@ const Registration = () => {
             <button
               onClick={loginWithGoogle}
               aria-label="Log in with Google"
-              className="p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:[#0A1F44]   transition duration-300"
+              className="p-3 rounded-full text-3xl"
             >
-              <FaFacebook className="text-2xl" />
+              <FaFacebook />
             </button>
             <button
               aria-label="Log in with Twitter"
-              className="p-3 rounded-full bg-[#0A1F44] dark:bg-gray-200 hover:[#0A1F44]   transition duration-300"
+              className="p-3 rounded-full text-3xl"
             >
-              <FaX className="text-2xl" />
+              <FaX />
             </button>
             <button
               aria-label="Log in with GitHub"
-              className="p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:[#0A1F44]   transition duration-300"
+              className="p-3 rounded-full text-3xl"
             >
-              <FaGithub className="text-2xl" />
+              <FaGithub />
             </button>
           </div>
 
