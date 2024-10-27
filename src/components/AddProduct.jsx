@@ -276,7 +276,10 @@ const AddProduct = () => {
 
         {/* Submit Button */}
         <div className="md:col-span-2">
-          <button type="submit" className="btn btn-primary w-full">
+          <button
+            type="submit"
+            className="btn rounded-xl bg-[#0A1F44] text-white hover:bg-transparent hover:border hover:border-[#0A1F44] hover:text-[#0A1F44] w-full"
+          >
             Add Product
           </button>
         </div>

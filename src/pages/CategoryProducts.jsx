@@ -17,7 +17,7 @@ const CategoryProducts = () => {
         <div className="text-center text-3xl text-[#0A1F44] font-extrabold p-2 capitalize bg-[#0A1F44] bg-opacity-20 backdrop-blur-sm sticky top-16 z-20 ">
           <h2>{params.categoryName}</h2>
         </div>
-        <div className="py-8 max-w-screen-xl mx-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 space-y-4">
+        <div className="py-8 max-w-screen-xl mx-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 ">
           {loadedData.map((product) => (
             <ProductCard key={product?._id} product={product}></ProductCard>
           ))}

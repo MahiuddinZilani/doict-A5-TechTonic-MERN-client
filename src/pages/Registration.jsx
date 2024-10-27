@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import uploadImageToImgBB from "../imgBB/imgbb.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -10,6 +10,9 @@ import { useForm } from "react-hook-form";
 const Registration = () => {
   const { createUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard/profile";
+
   const [showPassword, setShowPassword] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
 
@@ -27,6 +30,7 @@ const Registration = () => {
       await createUser(email, password, name, photoUrl, phone, address);
       reset();
       navigate("/login");
+      // navigate(from, { replace: true });
     } catch (err) {
       console.error(err.message);
     }
@@ -115,7 +119,7 @@ const Registration = () => {
                 {...register("phone", {
                   required: "Phone number is required",
                   pattern: {
-                    value: /^[0-9]{10}$/,
+                    value: /^[0-9]{11}$/,
                     message: "Enter a valid 10-digit phone number",
                   },
                 })}
@@ -217,7 +221,13 @@ const Registration = () => {
 
           <div className="flex justify-center space-x-4 mt-4">
             <button
-              onClick={loginWithGoogle}
+              onClick={async () => {
+                const success = await loginWithGoogle();
+                if (success) {
+                  navigate(from, { replace: true });
+                  console.log("Google login successful");
+                }
+              }}
               aria-label="Log in with Google"
               className="p-3 rounded-full text-3xl"
             >

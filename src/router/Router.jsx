@@ -18,6 +18,7 @@ import EditUser from "../components/EditUser";
 import AllCategory from "../components/AllCategory";
 import AllProducts from "../components/AllProducts";
 import AddProduct from "../components/AddProduct";
+import AddCategory from "../components/AddCategory";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +121,16 @@ const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <AddProduct></AddProduct>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "addCategory",
+        // loader: () =>
+        //   fetch("https://a5-tech-tonic-mern-server.vercel.app/products"),
+        element: (
+          <AdminRoutes>
+            <AddCategory />
           </AdminRoutes>
         ),
       },

@@ -94,7 +94,7 @@ const AuthProvider = ({ children }) => {
   const loginWithGoogle = () => {
     setLoading(true);
     const googleProvider = new GoogleAuthProvider();
-    signInWithPopup(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider)
       .then(async (res) => {
         const newUser = res.user;
 
@@ -133,19 +133,12 @@ const AuthProvider = ({ children }) => {
         } else {
           setUser(existingUser); // Use existing user from database
         }
-
-        // Show success message and navigate
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login Successful!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
         return true;
       })
-      .catch((error) => console.error("Google Sign-In Error:", error))
+      .catch((error) => {
+        console.error("Google Sign-In Error:", error);
+        return false;
+      })
       .finally(() => setLoading(false));
   };
 

@@ -117,12 +117,19 @@ const Login = () => {
 
           <div className="flex justify-center space-x-4 mt-4">
             <button
-              onClick={loginWithGoogle}
+              onClick={async () => {
+                const success = await loginWithGoogle();
+                if (success) {
+                  navigate(from, { replace: true });
+                  console.log("Google login successful");
+                }
+              }}
               aria-label="Log in with Google"
               className="p-3 rounded-full text-3xl"
             >
               <FaFacebook />
             </button>
+
             <button
               aria-label="Log in with Twitter"
               className="p-3 rounded-full text-3xl"
