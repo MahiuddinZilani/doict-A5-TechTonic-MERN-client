@@ -1,9 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import {
+  FaUser,
+  FaUsers,
+  FaList,
+  FaShoppingCart,
+  FaComment,
+  FaDollarSign,
+  FaSignOutAlt,
+  FaBars,
+} from "react-icons/fa";
 
 const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   const dashboardMenu = (
     <>
@@ -12,80 +27,134 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/dashboard/profile"
-              className="block p-4 hover:bg-gray-700"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              Profile
+              <FaUser />
+              {!isCollapsed && <span>Profile</span>}
             </NavLink>
           </li>
           <li>
             <NavLink
-              to={"/dashboard/allUsers"}
-              className="block p-4 hover:bg-gray-700"
+              to="/dashboard/allUsers"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              All Users
+              <FaUsers />
+              {!isCollapsed && <span>All Users</span>}
             </NavLink>
           </li>
           <li>
             <NavLink
-              to={"/dashboard/allCategory"}
-              className="block p-4 hover:bg-gray-700"
+              to="/dashboard/allCategory"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              All Category
+              <FaList />
+              {!isCollapsed && <span>All Category</span>}
             </NavLink>
           </li>
-          <NavLink
-            to={"/dashboard/allProducts"}
-            className="block p-4 hover:bg-gray-700"
-          >
-            All Products
-          </NavLink>
-          <NavLink
-            to={"/dashboard/updateProduct"}
-            className="block p-4 hover:bg-gray-700"
-          >
-            Update Product
-          </NavLink>
+          <li>
+            <NavLink
+              to="/dashboard/allProducts"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
+            >
+              <FaList />
+              {!isCollapsed && <span>All Products</span>}
+            </NavLink>
+          </li>
+          {/* <li>
+            <NavLink
+              to="/dashboard/updateProduct"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
+            >
+              <FaList />
+              {!isCollapsed && <span>Update Product</span>}
+            </NavLink>
+          </li> */}
         </>
       ) : (
         <>
           <li>
             <NavLink
               to="/dashboard/profile"
-              className="block p-4 hover:bg-gray-700"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              Profile
+              <FaUser />
+              {!isCollapsed && <span>Profile</span>}
             </NavLink>
           </li>
           <li>
             <NavLink
               to="/dashboard/carts"
-              className="block p-4 hover:bg-gray-700"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              My Cart
+              <FaShoppingCart />
+              {!isCollapsed && <span>My Cart</span>}
             </NavLink>
           </li>
           <li>
             <NavLink
               to="/dashboard/reviews"
-              className="block p-4 hover:bg-gray-700"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              Add Reviews
+              <FaComment />
+              {!isCollapsed && <span>Add Reviews</span>}
             </NavLink>
           </li>
           <li>
             <NavLink
               to="/dashboard/payment"
-              className="block p-4 hover:bg-gray-700"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              My Payment
+              <FaDollarSign />
+              {!isCollapsed && <span>My Payment</span>}
             </NavLink>
           </li>
           <li>
             <NavLink
-              to={"/dashboard/allUsers"}
-              className="block p-4 hover:bg-gray-700"
+              to="/dashboard/allUsers"
+              className={({ isActive }) =>
+                `flex items-center p-4 space-x-2 hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700" : ""
+                }`
+              }
             >
-              All Users
+              <FaUsers />
+              {!isCollapsed && <span>All Users</span>}
             </NavLink>
           </li>
         </>
@@ -94,20 +163,38 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="w-64 min-h-screen bg-gray-800 text-white ">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold">
-          {user.isAdmin ? "Admin Dashboard" : "User Dashboard"}
-        </h2>
-      </div>
-      <ul className="space-y-4 mx-4">
-        {dashboardMenu}
-        <button
-          onClick={logout}
-          className="btn w-full  my-16 bg-transparent text-white hover:text-black flex flex-col items-center"
+    <div
+      className={`flex flex-col items-center bg-[#0A1F44] text-white ${
+        isCollapsed ? "w-20" : "w-64"
+      } transition-width duration-300 min-h-screen`}
+    >
+      <div className="p-4 flex justify-between items-center">
+        <h2
+          onClick={toggleSidebar}
+          className={`text-2xl cursor-pointer font-bold ${
+            isCollapsed ? "hidden" : "block"
+          }`}
         >
-          Logout
+          {user.isAdmin ? "Admin" : "User"} Dashboard
+        </h2>
+        <button
+          onClick={toggleSidebar}
+          className={`text-white ${isCollapsed ? "flex" : "hidden"}`}
+        >
+          <FaBars />
         </button>
+      </div>
+      <ul className="space-y-4">
+        {dashboardMenu}
+        <li>
+          <button
+            onClick={logout}
+            className="flex items-center w-full p-4 space-x-2 hover:bg-gray-700"
+          >
+            <FaSignOutAlt />
+            {!isCollapsed && <span>Logout</span>}
+          </button>
+        </li>
       </ul>
     </div>
   );

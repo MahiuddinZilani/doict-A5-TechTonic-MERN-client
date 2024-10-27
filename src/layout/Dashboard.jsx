@@ -3,20 +3,14 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/shared/Navbar";
+import LoadingSpinner from "../components/shared/LoadingSpinner";
 
 const Dashboard = () => {
   const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   if (loading) {
-    return (
-      <>
-        <span className="loading loading-bars loading-xs"></span>
-        <span className="loading loading-bars loading-sm"></span>
-        <span className="loading loading-bars loading-md"></span>
-        <span className="loading loading-bars loading-lg"></span>
-      </>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

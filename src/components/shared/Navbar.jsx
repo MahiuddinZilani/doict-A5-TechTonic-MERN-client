@@ -92,7 +92,7 @@ const Navbar = () => {
                 <div className="w-10 md:w-16 rounded-full border">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src={user?.photoUrl}
+                    src={user?.photoURL}
                   />
                 </div>
               </div>
@@ -104,7 +104,7 @@ const Navbar = () => {
                   <p className="text-lg font-normal">{user?.email}</p>
                   <div className="avatar">
                     <div className="mask mask-squircle w-16">
-                      <img src={user?.photoUrl} />
+                      <img src={user?.photoURL} />
                     </div>
                   </div>
                   <div className="badge badge-outline text-white">

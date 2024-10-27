@@ -74,7 +74,7 @@ const AllUsers = () => {
                           <div className="avatar">
                             <div className="mask mask-squircle h-12 w-12">
                               <img
-                                src={user.photoUrl || "default-avatar-url"} // Add default avatar URL if needed
+                                src={user.photoURL || "default-avatar-url"} // Add default avatar URL if needed
                                 alt="User Avatar"
                               />
                             </div>
@@ -155,7 +155,7 @@ const AllUsers = () => {
                           <div className="avatar">
                             <div className="mask mask-squircle h-12 w-12">
                               <img
-                                src={user.photoUrl || "default-avatar-url"} // Add default avatar URL if needed
+                                src={user.photoURL || "default-avatar-url"} // Add default avatar URL if needed
                                 alt="User Avatar"
                               />
                             </div>

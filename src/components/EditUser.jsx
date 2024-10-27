@@ -18,13 +18,13 @@ const EditUser = () => {
     const displayName = form.displayName.value;
     const phone = form.phone.value;
     const address = form.address.value;
-    const photoUrl = form.photoUrl.value;
+    const photoURL = form.photoURL.value;
 
     const updateUserData = {
       displayName,
       phone,
       address,
-      photoUrl,
+      photoURL,
       uid: loadedUserData.uid,
       //   email: loadedUserData.email,
       isAdmin: loadedUserData.isAdmin,
@@ -106,15 +106,15 @@ const EditUser = () => {
             <div>
               <label
                 className="text-gray-700 dark:text-gray-200"
-                htmlFor="photoUrl"
+                htmlFor="photoURL"
               >
                 Image
               </label>
               <input
-                id="photoUrl"
+                id="photoURL"
                 type="url"
-                defaultValue={loadedUserData.photoUrl}
-                name="photoUrl"
+                defaultValue={loadedUserData.photoURL}
+                name="photoURL"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
@@ -136,7 +136,7 @@ export default EditUser;
 //     displayName,
 //     phone,
 //     address,
-//     photoUrl,
+//     photoURL,
 //     uid,
 //     email,
 //     isAdmin,

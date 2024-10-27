@@ -18,7 +18,7 @@ const Profile = () => {
         <hr className=" " />
         <div className="avatar my-4 p-4 flex flex-col items-center">
           <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2 p-2">
-            <img src={user.photoUrl} />
+            <img src={user.photoURL} />
           </div>
         </div>
         <div className="badge badge-primary   p-4 mx-auto justify-self-star">

@@ -11,6 +11,7 @@ import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import Swal from "sweetalert2";
 import { Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext(null);
 
@@ -42,8 +43,9 @@ const AuthProvider = ({ children }) => {
           email: newUser.email,
           displayName: name || "User",
           phone: phone,
-          photoUrl: photo,
+          photoURL: photo,
           address: address,
+          createdAt: new Date(),
           isAdmin: false, // Default role
           isBlocked: false, // Default status
           isSuper: false,
@@ -86,51 +88,58 @@ const AuthProvider = ({ children }) => {
     );
   };
 
-  // Login with Google
   const loginWithGoogle = () => {
     setLoading(true);
     const googleProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleProvider)
-      .then((res) => {
+    signInWithPopup(auth, googleProvider)
+      .then(async (res) => {
         const newUser = res.user;
-        setUser(newUser);
 
-        const userForDB = {
-          // uid: newUser.uid,
-          email: newUser.email,
-          displayName: newUser.displayName,
-          photoURL: newUser.photoURL,
-          createdAt: new Date(),
-        };
+        // Check if user already exists in the database
+        const response = await fetch(
+          `http://localhost:5100/users/${newUser.email}`
+        );
+        const existingUser = await response.json();
 
-        fetch("http://localhost:5100/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userForDB), // Pass the correct user data
-        })
-          .then((res) => res.json()) // Parse the response
-          .then((data) => {
-            console.log("User saved in database:", data);
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Login Successful!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          })
-          .catch((error) => console.error(error));
+        // If user does not exist, insert new user data
+        if (!existingUser) {
+          const userForDB = {
+            uid: newUser.uid,
+            email: newUser.email,
+            displayName: newUser.displayName,
+            photoURL: newUser.photoURL,
+            createdAt: new Date(),
+            isAdmin: false,
+            isBlocked: false,
+            isSuper: false,
+          };
 
-        if (user) {
-          return (
-            <>
-              <Navigate to={"/"}></Navigate>
-            </>
-          );
+          const insertResponse = await fetch("http://localhost:5100/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userForDB),
+          });
+          const insertData = await insertResponse.json();
+          setUser(userForDB); // Update the user state after successful insert
+          console.log("User saved in database:", insertData);
+        } else {
+          setUser(existingUser); // Use existing user from database
         }
+
+        // Show success message and navigate
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        return true;
       })
+      .catch((error) => console.error("Google Sign-In Error:", error))
       .finally(() => setLoading(false));
   };
 
@@ -197,3 +206,7 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

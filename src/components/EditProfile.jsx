@@ -20,14 +20,14 @@ const EditProfile = () => {
     const phone = form.phone.value;
     const address = form.address.value;
 
-    const photoFile = e.target.photoUrl.files[0];
-    const photoUrl = await uploadImageToImgBB(photoFile);
+    const photoFile = e.target.photoURL.files[0];
+    const photoURL = await uploadImageToImgBB(photoFile);
 
     const userUpdateData = {
       displayName,
       phone,
       address,
-      photoUrl,
+      photoURL,
       uid: user.uid,
       email: user.email,
       isAdmin: user?.isAdmin,
@@ -111,15 +111,15 @@ const EditProfile = () => {
             <div>
               <label
                 className="text-gray-700 dark:text-gray-200"
-                htmlFor="photoUrl"
+                htmlFor="photoURL"
               >
                 Upload Profile Picture
               </label>
               <input
-                id="photoUrl"
+                id="photoURL"
                 type="file"
-                // defaultValue={user.photoUrl}
-                name="photoUrl"
+                // defaultValue={user.photoURL}
+                name="photoURL"
                 // onChange={handleImage}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
