@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const Cart = () => {
   const { user } = useContext(AuthContext);
@@ -20,15 +21,26 @@ const Cart = () => {
   }, [user?.email]);
 
   const handleDeleteItem = (itemId) => {
-    fetch(`https://a5-tech-tonic-mern-server.vercel.app/cart/${itemId}`, {
+    // console.log(itemId);
+    fetch(`https://a5-tech-tonic-mern-server.vercel.app/carts/${itemId}`, {
       method: "DELETE",
     })
-      .then(() => {
-        const updatedCart = cart.filter((item) => item._id !== itemId);
-        setCart(updatedCart);
-        setTotal(updatedCart.reduce((sum, product) => sum + product.price, 0));
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          const updatedCart = cart.filter((item) => item._id !== itemId);
+          setCart(updatedCart);
+          setTotal(
+            updatedCart.reduce((sum, product) => sum + product.price, 0)
+          );
+          Swal.fire({
+            title: "Deleted!",
+            text: "Product is deleted from cart",
+            icon: "success",
+          });
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error("Error deleting item:", error));
   };
 
   return (
