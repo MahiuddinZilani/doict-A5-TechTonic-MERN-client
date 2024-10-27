@@ -36,7 +36,7 @@ const AllProducts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5100/products/${_id}`, {
+        fetch(`https://a5-tech-tonic-mern-server.vercel.app/products/${_id}`, {
           method: "DELETE",
         })
           .then((res) => {
@@ -64,7 +64,7 @@ const AllProducts = () => {
           });
       }
     });
-    console.log(_id);
+    // console.log(_id);
   };
 
   const handleEditClick = (product) => {
@@ -74,7 +74,7 @@ const AllProducts = () => {
 
   // console.log(products);
 
-  console.log(selectedProduct, isModalOpen);
+  // console.log(selectedProduct, isModalOpen);
   return (
     <div>
       <h1>All Products ({products.length})</h1>

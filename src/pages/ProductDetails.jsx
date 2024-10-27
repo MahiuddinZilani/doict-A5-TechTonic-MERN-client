@@ -43,7 +43,7 @@ const ProductDetails = () => {
         deliveryAddress,
       };
 
-      fetch("http://localhost:5100/carts", {
+      fetch("https://a5-tech-tonic-mern-server.vercel.app/carts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

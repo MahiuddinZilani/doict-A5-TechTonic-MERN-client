@@ -9,7 +9,7 @@ const AddProduct = () => {
   const newId = allProducts.length + 1;
 
   useEffect(() => {
-    fetch("http://localhost:5100/categories")
+    fetch("https://a5-tech-tonic-mern-server.vercel.app/categories")
       .then((res) => res.json())
       .then((data) => {
         // const categories = data.filter((datum) => datum?.name);
@@ -72,13 +72,16 @@ const AddProduct = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5100/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
-      });
+      const res = await fetch(
+        "https://a5-tech-tonic-mern-server.vercel.app/products",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(productData),
+        }
+      );
 
       if (!res.ok) throw new Error("Failed to add product");
 

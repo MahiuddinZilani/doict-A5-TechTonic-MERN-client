@@ -32,18 +32,23 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
-        loader: () => fetch("http://localhost:5100/products"),
+        loader: () =>
+          fetch("https://a5-tech-tonic-mern-server.vercel.app/products"),
       },
       {
         path: "/productsCategory/:categoryName",
         element: <CategoryProducts />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5100/categories/${params.categoryName}`),
+          fetch(
+            `https://a5-tech-tonic-mern-server.vercel.app/categories/${params.categoryName}`
+          ),
       },
       {
         path: "/products/:_id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5100/products/${params._id}`),
+          fetch(
+            `https://a5-tech-tonic-mern-server.vercel.app/products/${params._id}`
+          ),
         element: (
           <PrivateRoutes>
             <ProductDetails />
@@ -58,15 +63,6 @@ const router = createBrowserRouter([
         path: "/registration",
         element: <Registration />,
       },
-
-      // {
-      //   path: "/products/:id/:category",
-      //   element: <ProductDetails />,
-      //   loader: ({ params }) =>
-      //     fetch(
-      //       `http://localhost:5100/products/${params.id}/${params.category}`
-      //     ),
-      // },
     ],
   },
   {
@@ -97,16 +93,20 @@ const router = createBrowserRouter([
           </AdminRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5100/users/${params.email}`),
+          fetch(
+            `https://a5-tech-tonic-mern-server.vercel.app/users/${params.email}`
+          ),
       },
       {
         path: "allCategory",
         element: <AllCategory />,
-        loader: () => fetch("http://localhost:5100/categories"),
+        loader: () =>
+          fetch("https://a5-tech-tonic-mern-server.vercel.app/categories"),
       },
       {
         path: "allProducts",
-        loader: () => fetch("http://localhost:5100/products"),
+        loader: () =>
+          fetch("https://a5-tech-tonic-mern-server.vercel.app/products"),
         element: (
           <AdminRoutes>
             <AllProducts />
@@ -115,7 +115,8 @@ const router = createBrowserRouter([
       },
       {
         path: "addProduct",
-        loader: () => fetch("http://localhost:5100/products"),
+        loader: () =>
+          fetch("https://a5-tech-tonic-mern-server.vercel.app/products"),
         element: (
           <AdminRoutes>
             <AddProduct></AddProduct>

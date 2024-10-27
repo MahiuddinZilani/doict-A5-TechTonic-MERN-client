@@ -31,13 +31,16 @@ const EditUser = () => {
       isBlocked: loadedUserData.isBlocked,
     };
     //     Update user data in the database
-    fetch(`http://localhost:5100/users/${loadedUserData.email}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateUserData),
-    })
+    fetch(
+      `https://a5-tech-tonic-mern-server.vercel.app/users/${loadedUserData.email}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateUserData),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         toast.success(`${displayName}'s information is updated successfully!`);

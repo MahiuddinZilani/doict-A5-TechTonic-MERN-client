@@ -37,7 +37,7 @@ const EditProfile = () => {
       isBlocked: user?.isBlocked,
     };
 
-    fetch(`http://localhost:5100/users/${user.email}`, {
+    fetch(`https://a5-tech-tonic-mern-server.vercel.app/users/${user.email}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userUpdateData),

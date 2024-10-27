@@ -20,7 +20,7 @@ const AllCategory = () => {
       id: toString(categories.length + 1),
     };
 
-    fetch("http://localhost:5100/categories", {
+    fetch("https://a5-tech-tonic-mern-server.vercel.app/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

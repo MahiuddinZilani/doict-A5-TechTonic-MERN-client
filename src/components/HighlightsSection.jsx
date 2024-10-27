@@ -10,7 +10,7 @@ const HighlightsSection = () => {
   const [highlights, setHighlights] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5100/products")
+    fetch("https://a5-tech-tonic-mern-server.vercel.app/products")
       .then((res) => res.json())
       .then((data) => {
         setHighlights(data.filter((product) => product?.rating > 4.8));

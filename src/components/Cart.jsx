@@ -9,7 +9,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5100/carts/${user.email}`)
+      fetch(`https://a5-tech-tonic-mern-server.vercel.app/carts/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setCart(data);
@@ -20,7 +20,9 @@ const Cart = () => {
   }, [user?.email]);
 
   const handleDeleteItem = (itemId) => {
-    fetch(`http://localhost:5100/cart/${itemId}`, { method: "DELETE" })
+    fetch(`https://a5-tech-tonic-mern-server.vercel.app/cart/${itemId}`, {
+      method: "DELETE",
+    })
       .then(() => {
         const updatedCart = cart.filter((item) => item._id !== itemId);
         setCart(updatedCart);

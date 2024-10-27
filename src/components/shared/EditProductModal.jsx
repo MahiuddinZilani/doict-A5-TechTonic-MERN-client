@@ -24,7 +24,7 @@ const EditProductModal = ({ product, isOpen, onRequestClose, onUpdate }) => {
 
   //   const handleSubmit = (e) => {
   //     e.preventDefault();
-  //     fetch(`http://localhost:5100/products/${product._id}`, {
+  //     fetch(`https://a5-tech-tonic-mern-server.vercel.app/products/${product._id}`, {
   //       method: "PATCH",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const EditProductModal = ({ product, isOpen, onRequestClose, onUpdate }) => {
     // Check if a new image file is provided
     if (updatedProduct.photo && updatedProduct.photo instanceof File) {
       imageUrl = await uploadImageToImgBB(updatedProduct.photo);
-      console.log(imageUrl);
+      // console.log(imageUrl);
     }
 
     // If image upload failed, don't proceed with form submission
@@ -94,13 +94,16 @@ const EditProductModal = ({ product, isOpen, onRequestClose, onUpdate }) => {
       photoURL: imageUrl,
     };
 
-    fetch(`http://localhost:5100/products/${product._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedProductData),
-    })
+    fetch(
+      `https://a5-tech-tonic-mern-server.vercel.app/products/${product._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProductData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         Swal.fire({

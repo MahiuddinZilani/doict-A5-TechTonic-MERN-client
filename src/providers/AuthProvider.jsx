@@ -10,7 +10,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import Swal from "sweetalert2";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export const AuthContext = createContext(null);
@@ -33,24 +33,27 @@ const AuthProvider = ({ children }) => {
       await userUpdateProfile(name, photo);
 
       // Save user data in MongoDB
-      const response = await fetch("http://localhost:5100/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          uid: newUser.uid,
-          email: newUser.email,
-          displayName: name || "User",
-          phone: phone,
-          photoURL: photo,
-          address: address,
-          createdAt: new Date(),
-          isAdmin: false, // Default role
-          isBlocked: false, // Default status
-          isSuper: false,
-        }),
-      });
+      const response = await fetch(
+        "https://a5-tech-tonic-mern-server.vercel.app/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            uid: newUser.uid,
+            email: newUser.email,
+            displayName: name || "User",
+            phone: phone,
+            photoURL: photo,
+            address: address,
+            createdAt: new Date(),
+            isAdmin: false, // Default role
+            isBlocked: false, // Default status
+            isSuper: false,
+          }),
+        }
+      );
 
       const data = await response.json();
       if (response.ok && data.insertedId) {
@@ -97,7 +100,7 @@ const AuthProvider = ({ children }) => {
 
         // Check if user already exists in the database
         const response = await fetch(
-          `http://localhost:5100/users/${newUser.email}`
+          `https://a5-tech-tonic-mern-server.vercel.app/users/${newUser.email}`
         );
         const existingUser = await response.json();
 
@@ -114,13 +117,16 @@ const AuthProvider = ({ children }) => {
             isSuper: false,
           };
 
-          const insertResponse = await fetch("http://localhost:5100/users", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userForDB),
-          });
+          const insertResponse = await fetch(
+            "https://a5-tech-tonic-mern-server.vercel.app/users",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userForDB),
+            }
+          );
           const insertData = await insertResponse.json();
           setUser(userForDB); // Update the user state after successful insert
           console.log("User saved in database:", insertData);
@@ -163,7 +169,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         try {
           const res = await fetch(
-            `http://localhost:5100/users/${currentUser.email}`
+            `https://a5-tech-tonic-mern-server.vercel.app/users/${currentUser.email}`
           );
 
           if (!res.ok) {
@@ -171,7 +177,7 @@ const AuthProvider = ({ children }) => {
           }
 
           const data = await res.json();
-          console.log(data, currentUser);
+          // console.log(data, currentUser);
           setUser(data); // Set user state with the MongoDB user data
         } catch (error) {
           console.error("Error fetching user data:", error.message);

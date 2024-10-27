@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaFacebook, FaGithub, FaX } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
   const { login, loginWithGoogle } = useContext(AuthContext);
@@ -13,15 +14,19 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard/profile";
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
 
     login(email, password)
       .then(() => {
-        form.reset();
+        reset();
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -39,13 +44,13 @@ const Login = () => {
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <div className=" my-8  flex items-center justify-center px-4">
+      <div className="my-8 flex items-center justify-center px-4">
         <div className="w-full max-w-md p-8 bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg">
           <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-50 mb-6">
             Login
           </h1>
 
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email */}
             <div className="space-y-1 text-sm">
               <label htmlFor="email" className="block text-gray-600">
@@ -53,13 +58,18 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                name="email"
                 id="email"
-                required
                 placeholder="Email"
                 className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                {...register("email", { required: "Email is required" })}
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
+
             {/* Password */}
             <div className="space-y-1 text-sm">
               <label htmlFor="password" className="block text-gray-600">
@@ -68,20 +78,25 @@ const Login = () => {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="password"
                   id="password"
-                  required
                   placeholder="Password"
                   className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
                 >
-                  {/* {showPassword ? "Hide" : "Show"} */}
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <button
@@ -125,7 +140,7 @@ const Login = () => {
           <p className="text-xs text-center text-gray-400 dark:text-gray-600 mt-4">
             Don&apos;t have an account?{" "}
             <Link
-              to="/registration"
+              to={"/registration"}
               className="text-violet-400 dark:text-violet-600 hover:underline"
             >
               Register here

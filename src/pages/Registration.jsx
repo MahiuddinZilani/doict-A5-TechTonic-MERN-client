@@ -5,35 +5,33 @@ import uploadImageToImgBB from "../imgBB/imgbb.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { FaFacebook, FaGithub, FaX } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
 
 const Registration = () => {
   const { createUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  // State management for password visibility and form fields
   const [showPassword, setShowPassword] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
 
-  const handleRegistration = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const phone = form.phone.value;
-    const address = form.address.value;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({ mode: "onChange" });
+
+  const onSubmit = async (data) => {
+    const { name, email, password, phone, address } = data;
 
     try {
       await createUser(email, password, name, photoUrl, phone, address);
+      reset();
       navigate("/login");
     } catch (err) {
       console.error(err.message);
-    } finally {
-      form.reset();
     }
   };
 
-  // Upload file to ImgBB and set the photo URL
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -51,13 +49,13 @@ const Registration = () => {
       <Helmet>
         <title>Registration</title>
       </Helmet>
-      <div className="w-full my-8 flex justify-center items-center ">
-        <div className="w-3/4 lg:w-full max-w-2xl p-8 space-y-2 rounded-xl bg-gray-100  shadow-lg text-gray-900 ">
+      <div className="w-full my-8 flex justify-center items-center">
+        <div className="w-3/4 lg:w-full max-w-2xl p-8 space-y-2 rounded-xl bg-gray-100 shadow-lg text-gray-900">
           <h1 className="text-2xl font-bold text-center text-[#0A1F44]">
             Register
           </h1>
           <form
-            onSubmit={handleRegistration}
+            onSubmit={handleSubmit(onSubmit)}
             className="lg:grid lg:grid-cols-2 gap-x-8"
           >
             {/* Full Name */}
@@ -67,12 +65,16 @@ const Registration = () => {
               </label>
               <input
                 type="text"
-                name="name"
                 id="name"
-                required
                 placeholder="Name"
                 className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                {...register("name", { required: "Name is required" })}
               />
+              {errors.name && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             {/* Email */}
@@ -82,12 +84,22 @@ const Registration = () => {
               </label>
               <input
                 type="email"
-                name="email"
                 id="email"
-                required
                 placeholder="Email"
                 className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Enter a valid email",
+                  },
+                })}
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             {/* Phone */}
@@ -97,12 +109,22 @@ const Registration = () => {
               </label>
               <input
                 type="tel"
-                name="phone"
                 id="phone"
-                required
                 placeholder="Phone"
                 className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                {...register("phone", {
+                  required: "Phone number is required",
+                  pattern: {
+                    value: /^[0-9]{10}$/,
+                    message: "Enter a valid 10-digit phone number",
+                  },
+                })}
               />
+              {errors.phone && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.phone.message}
+                </p>
+              )}
             </div>
 
             {/* Address */}
@@ -112,12 +134,16 @@ const Registration = () => {
               </label>
               <input
                 type="text"
-                name="address"
                 id="address"
-                required
                 placeholder="Address"
                 className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                {...register("address", { required: "Address is required" })}
               />
+              {errors.address && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.address.message}
+                </p>
+              )}
             </div>
 
             {/* Photo */}
@@ -127,12 +153,16 @@ const Registration = () => {
               </label>
               <input
                 type="file"
-                name="photo"
                 id="photo"
                 accept="image/*"
                 onChange={handleFileUpload}
                 className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
               />
+              {photoUrl && (
+                <p className="text-green-500 text-xs mt-1">
+                  Image uploaded successfully!
+                </p>
+              )}
             </div>
 
             {/* Password */}
@@ -143,24 +173,34 @@ const Registration = () => {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="password"
                   id="password"
-                  required
                   placeholder="Password"
                   className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-blue-500"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
                 >
-                  {/* {showPassword ? "Hide" : "Show"} */}
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <button
               type="submit"
+              disabled={!isValid}
               className="block w-full mt-4 p-3 rounded-lg bg-[#0A1F44] font-semibold text-white hover:bg-transparent hover:border-2 hover:border-[#0A1F44] hover:text-[#0A1F44] col-span-2"
             >
               Register
